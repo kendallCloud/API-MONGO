@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 var PersonaScheme = new mongoose.Schema({
+  _id: mongoose.Types.ObjectId,
   per_nombre: String,
   per_apellidos: String,
   per_edad: Number,
@@ -21,5 +22,16 @@ router.post('/agregar', (req, res)=> {
       console.log(res);
   }).catch(err => console.log(err))
 });
+
+router.delete('/borrar', (req, res) => {
+PersonaScheme.remove({ _id:  req.body.id},function(err, result) {
+  if (err) {
+    console.err(err);
+  } else {
+    res.json(result);
+  }
+});  
+});
+
 
 module.exports = router;
