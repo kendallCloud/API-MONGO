@@ -1,3 +1,6 @@
+const sessions = require('express-session');
+const cors =  require('cors');
+
 const express = require('express');
 const mongoose = require('mongoose');
 // require("dotenv").config();
@@ -16,18 +19,63 @@ const Parametro = require('../cruds/parametros')
 const app = express();
 const port= process.env.PORT || 4000;
 app.use(express.json());
-app.use('/persona',Persona)
-app.use('/departamento',Departamento)
-app.use('/tramite',Tramite)
-app.use('/caso',Caso)
-app.use('/detalleCaso',DetalleCaso)
-app.use('/gerencia',Gerencia)
-app.use('/documento',Documento)
-app.use('/aprobadoXdepartamento',AprobadoXdepartamento)
-app.use('/jefeXdepartamento',JefeXdepartamento)
-app.use('/parametros',Parametro)
+app.use(cors());
+app.use('/persona',Persona);
+app.use('/departamento',Departamento);
+app.use('/tramite',Tramite);
+app.use('/caso',Caso);
+app.use('/detalleCaso',DetalleCaso);
+app.use('/gerencia',Gerencia);
+app.use('/documento',Documento);
+app.use('/aprobadoXdepartamento',AprobadoXdepartamento);
+app.use('/jefeXdepartamento',JefeXdepartamento);
+app.use('/parametros',Parametro);
 
 //routes
+
+//POSTS
+app.post('/G',(req, res)=>{
+    mongoose.insert(req.body);
+    console.log(JSON.stringify(req.body));
+    res.send(`Esto es un post del  Nombre: ${req.body.nombre} ${req.body.apellido}`);
+})
+
+//Gets
+var session;
+
+const horas = 1000 * 60 * 60 * 2;
+ app.use(sessions({
+     secret: "secrctekeyfhrgfgrfrty84fwir767",
+     saveUninitialized:true,
+     cookie: { maxAge: horas },
+     resave: false
+ }));
+
+
+app.get('/',function (req,res) {
+    session=req.session;
+    console.log(session);
+    var json = {
+      "hola":"Sesion iniciada"
+    }
+    console.log("Bienvenido al servidor "+req.query.name);
+    req.session.name = 'cliente';
+    res.send(json);
+    console.log("sesion iniciada");
+  });
+
+  app.get('/logout',(req,res) => {
+    var mensaje = new String("a cerrado sesion");
+    var json = {
+      "adios":mensaje
+    }
+    req.session.destroy(function(error){
+        console.log("Session Destroyed")
+    })
+    console.log(mensaje);
+    res.send(mensaje);
+  });
+
 //Getters
 // app.get('/',(req,res) =>{
 // res.send("hola");
@@ -35,14 +83,6 @@ app.use('/parametros',Parametro)
 // app.get('/:id',(req,res) =>{
 // res.send({"id": req.params.id, "nombre":"Dario"});
 // });
-
-//POSTS
-app.post('/G',(req, res)=>{
-    mongoose.insert(req.body);
-    console.log(JSON.stringify(req.body));
-    res.send(`Esto es un post del  Nombre: ${req.body.nombre} ${req.body.apellido}`);
-
-})
 
 // //DELETES
 // app.delete('/:id',(req,res) => {
