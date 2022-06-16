@@ -27,7 +27,7 @@ router.post('/agregar', (req, res)=> {
   }).catch(err => console.log(err))
 });
 
-router.delete('/borrar', (req, res) => {
+router.delete('/borrar', (req, res) => {// cambiar por id*
     AprobadoXdepartamento.findOneAndDelete({axd_codigo: req.body.codigo }, function (err, docs) {
     if (err){
         console.log(err)
@@ -38,7 +38,7 @@ router.delete('/borrar', (req, res) => {
   });
 });
 
-router.put('/editar', (req, res) => {
+router.put('/editar', (req, res) => {// cambiar por id*
     AprobadoXdepartamento.findOneAndUpdate({axd_codigo: req.body.codigo }, 
       {axd_dpto_cod:req.body.codDpto,
         axd_tramite_cod:req.body.codTramite,
@@ -54,7 +54,7 @@ router.put('/editar', (req, res) => {
     });
 });
 
-router.get('/per', (req, res) => {
+router.get('/per', (req, res) => {// cambiar por id*
     AprobadoXdepartamento.findOne({axd_codigo: req.body.codigo}, function (err, docs) {
       if (err){
           console.log(err)

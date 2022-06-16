@@ -4,9 +4,11 @@ const router = express.Router();
 
 var TramiteScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
+    trm_nombre: String,
     trm_codigo: String,
-    trm_departamento_cod: String,
-    //trm_documentos:                       //tramites que necesita
+   // trm_departamentosAprueban,              //departamentos que lo aprueban
+   // trm_departamento_cod: S,               //departamento que lo realiza
+    //trm_documentos:                       //documentos que necesita
     
   });
 
@@ -14,8 +16,9 @@ var TramiteScheme = new mongoose.Schema({
 
 router.post('/agregar', (req, res)=> {
   const tramite = new Tramite({
-      trm_codigo:req.body.codigo,
-      trm_departamento_cod:req.body.codigoDpto,
+      //trm_codigo:req.body.codigo,
+      trm_nombre: req.body.nombre,
+     // trm_departamento_cod:req.body.codigoDpto,
   })
   tramite.save()
   .then(res =>{
@@ -23,7 +26,7 @@ router.post('/agregar', (req, res)=> {
   }).catch(err => console.log(err))
 });
 
-router.delete('/borrar', (req, res) => {
+router.delete('/borrar', (req, res) => {// cambiar por id*
     Tramite.findOneAndDelete({trm_codigo: req.body.codigo }, function (err, docs) {
     if (err){
         console.log(err)
@@ -34,9 +37,10 @@ router.delete('/borrar', (req, res) => {
   });
 });
 
-router.put('/editar', (req, res) => {
-    Tramite.findOneAndUpdate({trm_codigo: req.body.codigo }, 
-      {trm_departamento_cod:req.body.codigoDpto,},
+router.put('/editar', (req, res) => {// cambiar por id*
+    Tramite.findOneAndUpdate({trm_codigo: req.body.codigo }, // cambiar por id*
+      {/*trm_departamento_cod:req.body.codigoDpto,*/
+        trm_nombre: req.body.nombre},
       function (err, docs) {
       if (err){
           console.log(err)
@@ -47,7 +51,7 @@ router.put('/editar', (req, res) => {
     });
 });
 
-router.get('/per', (req, res) => {
+router.get('/per', (req, res) => {// cambiar por id*
     Tramite.findOne({trm_codigo: req.body.codigo}, function (err, docs) {
       if (err){
           console.log(err)
