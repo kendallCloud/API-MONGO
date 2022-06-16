@@ -1,5 +1,6 @@
 const sessions = require('express-session');
 const cors =  require('cors');
+const morgan = require('morgan');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -18,18 +19,19 @@ const JefeXdepartamento = require('../cruds/jefeXdepartamento')
 const Parametro = require('../cruds/parametros')
 const app = express();
 const port= process.env.PORT || 4000;
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
-app.use('/persona',Persona);
-app.use('/departamento',Departamento);
-app.use('/tramite',Tramite);
-app.use('/caso',Caso);
-app.use('/detalleCaso',DetalleCaso);
-app.use('/gerencia',Gerencia);
-app.use('/documento',Documento);
-app.use('/aprobadoXdepartamento',AprobadoXdepartamento);
-app.use('/jefeXdepartamento',JefeXdepartamento);
-app.use('/parametros',Parametro);
+app.use('/api/persona',Persona);
+app.use('/api/departamento',Departamento);
+app.use('/api/tramite',Tramite);
+app.use('/api/caso',Caso);
+app.use('/api/detalleCaso',DetalleCaso);
+app.use('/api/gerencia',Gerencia);
+app.use('/api/documento',Documento);
+app.use('/api/aprobadoXdepartamento',AprobadoXdepartamento);
+app.use('/api/jefeXdepartamento',JefeXdepartamento);
+app.use('/api/parametros',Parametro);
 
 //routes
 

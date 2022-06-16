@@ -8,6 +8,7 @@ var ParametroScheme = new mongoose.Schema({
     par_logo: String,
     par_nombre: String,
     par_ced_juridica: String,
+    par_email:String,
     par_departamentos:Array
   });
 
@@ -19,6 +20,7 @@ router.post('/agregar', (req, res)=> {
     par_logo:req.body.logo,
     par_nombre:req.body.nombre,
     par_ced_juridica:req.body.cedJuridica,
+    par_email:req.body.email,
     par_departamentos:req.body.departamentos,
 
   })
@@ -44,6 +46,7 @@ router.put('/editar', (req, res) => {
       {par_logo:req.body.logo,
         par_nombre:req.body.nombre,
         par_ced_juridica:req.body.cedJuridica,
+        par_email:req.body.email,
         par_departamentos:req.body.departamentos,},
       function (err, docs) {
       if (err){
