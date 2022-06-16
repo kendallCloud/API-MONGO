@@ -8,8 +8,7 @@ var ParametroScheme = new mongoose.Schema({
     par_logo: String,
     par_nombre: String,
     par_ced_juridica: String,
-    par_email:String,
-    par_departamentos:Array
+    par_email:String
   });
 
   const Parametro = mongoose.model('parametros',ParametroScheme)
@@ -21,7 +20,7 @@ router.post('/agregar', (req, res)=> {
     par_nombre:req.body.nombre,
     par_ced_juridica:req.body.cedJuridica,
     par_email:req.body.email,
-    par_departamentos:req.body.departamentos,
+    
 
   })
   parametro.save()
@@ -42,12 +41,11 @@ router.delete('/borrar', (req, res) => {
 });
 
 router.put('/editar', (req, res) => {
-    Parametro.findOneAndUpdate({par_codigo: req.body.codigo }, 
-      {par_logo:req.body.logo,
+    Parametro.findOneAndUpdate({par_nombre: req.body.par_nombre }, 
+      {
         par_nombre:req.body.nombre,
         par_ced_juridica:req.body.cedJuridica,
-        par_email:req.body.email,
-        par_departamentos:req.body.departamentos,},
+        par_email:req.body.email,},
       function (err, docs) {
       if (err){
           console.log(err)
@@ -58,13 +56,14 @@ router.put('/editar', (req, res) => {
     });
 });
 
-router.get('/per', (req, res) => {
-    Parametro.findOne({par_codigo: req.body.codigo}, function (err, docs) {
+router.get('/par', (req, res) => {
+    Parametro.findOne({par_nombre: req.body.nombre}, function (err, docs) {
       if (err){
           console.log(err)
       }
       else{
           console.log("Result : ", docs);
+          res.json(docs);
       }
     });
 });
