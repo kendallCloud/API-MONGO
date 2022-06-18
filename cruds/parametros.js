@@ -5,7 +5,7 @@ const router = express.Router();
 var ParametroScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
     par_codigo: String,
-    par_logo: String,
+    par_depart: Array,
     par_nombre: String,
     par_ced_juridica: String,
     par_email:String
@@ -16,12 +16,11 @@ var ParametroScheme = new mongoose.Schema({
 router.post('/agregar', (req, res)=> {
   const parametro = new Parametro({
     par_codigo:req.body.codigo,
-    par_logo:req.body.logo,
+     par_depart:req.body.departamentos,
     par_nombre:req.body.nombre,
     par_ced_juridica:req.body.cedJuridica,
     par_email:req.body.email,
     
-
   })
   parametro.save()
   .then(res =>{
