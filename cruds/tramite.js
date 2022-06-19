@@ -6,9 +6,9 @@ var TramiteScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
     trm_nombre: String,
     trm_codigo: String,
-   // trm_departamentosAprueban,              //departamentos que lo aprueban
-   // trm_departamento_cod: S,               //departamento que lo realiza
-    //trm_documentos:                       //documentos que necesita
+    trm_departamentosAprueban:Array,              //departamentos que lo aprueban
+    trm_departamento_cod: String,               //departamento que lo realiza
+    trm_documentos: Array                      //documentos que necesita
     
   });
 
@@ -16,9 +16,11 @@ var TramiteScheme = new mongoose.Schema({
 
 router.post('/agregar', (req, res)=> {
   const tramite = new Tramite({
-      //trm_codigo:req.body.codigo,
-      trm_nombre: req.body.nombre,
-     // trm_departamento_cod:req.body.codigoDpto,
+    trm_nombre: rep.body.trm_nombre,
+    trm_codigo: rep.body.trm_codigo,
+    trm_departamentosAprueban:rep.body.trm_departamentosAprueban,              //departamentos que lo aprueban
+    trm_departamento_cod: rep.body.trm_departamento_cod,               //departamento que lo realiza
+    trm_documentos: rep.body.trm_documentos    
   })
   tramite.save()
   .then(res =>{
