@@ -4,5 +4,18 @@ Content-Type:application/json
 ###
 
 ####
+GET  http://localhost:4000/api/departamento/all
+Content-Type:application/json
 
-POST 
+####
+GET  http://localhost:4000/api/caso/all
+Content-Type:application/json
+
+####
+GET  http://localhost:4000/api/tramite/all
+Content-Type:application/json
+
+####
+GET  http://localhost:4000/api/caso/all
+Content-Type:application/json
+
