@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const multer =require('multer');
 
 var DocumentoScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
@@ -9,6 +10,11 @@ var DocumentoScheme = new mongoose.Schema({
   });
 
   const Documento = mongoose.model('documentos',DocumentoScheme)
+
+const upload=multer({dest: 'uploads/'});  
+router.post('/upload',upload.single('file'),(req,res)=>{
+  res.json({status: 'succes'});
+});
 
 router.post('/agregar', (req, res)=> {
   const documento = new Documento({
