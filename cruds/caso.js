@@ -19,7 +19,7 @@ router.post('/agregar', (req, res)=> {
       cso_fecha_apertura:req.body.fechaApertura,
       cso_fecha_traspaso: req.body.fechaTraspaso,
       cso_fecha_final:req.body.fechaFinal,
-      //cso_tramite_cod:req.body.codTramite                 //Tramite al que pertenece
+      cso_tramite_cod:req.body.codTramite                 //Tramite al que pertenece
   })
   caso.save()
   .then(res =>{
