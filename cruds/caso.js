@@ -51,13 +51,15 @@ router.put('/editar', (req, res) => {
     });
 });
 
-router.get('/per', (req, res) => {
-    Caso.findOne({cso_numero_caso: req.body.numeroCaso}, function (err, docs) {
+router.get('/buscar', (req, res) => {
+  console.log(req.headers.cod);
+    Caso.findOne({cso_numero_caso:req.headers.cod}, function (err, docs) {
       if (err){
           console.log(err)
       }
       else{
-          console.log("Result : ", docs);
+        console.log("Result : ", docs);
+        res.json(docs);
       }
     });
 });

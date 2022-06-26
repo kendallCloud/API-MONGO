@@ -19,3 +19,5 @@ Content-Type:application/json
 GET  http://localhost:4000/api/caso/all
 Content-Type:application/json
 
+####
+GET  http://localhost:4000/api/caso/per
