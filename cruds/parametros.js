@@ -7,6 +7,7 @@ var ParametroScheme = new mongoose.Schema({
     par_codigo: String,
     par_depart: Array,
     par_nombre: String,
+    par_departamentos:[{type: mongoose.Schema.Types.ObjectId,ref: 'departamentos'}],
     par_ced_juridica: String,
     par_email:String
   });
@@ -16,10 +17,10 @@ var ParametroScheme = new mongoose.Schema({
 router.post('/agregar', (req, res)=> {
   const parametro = new Parametro({
     par_codigo:req.body.codigo,
-     par_depart:req.body.departamentos,
+    par_depart:req.body.departamentos,
     par_nombre:req.body.nombre,
     par_ced_juridica:req.body.cedJuridica,
-    par_email:req.body.email,
+    par_email:req.body.email
     
   })
   parametro.save()
@@ -40,17 +41,19 @@ router.delete('/borrar', (req, res) => {
 });
 
 router.put('/editar', (req, res) => {
-    Parametro.findOneAndUpdate({par_nombre: req.body.par_nombre }, 
+    Parametro.findOneAndUpdate({_id: req.body._id }, 
       {
-        par_nombre:req.body.nombre,
-        par_ced_juridica:req.body.cedJuridica,
-        par_email:req.body.email,},
+        par_nombre: req.body.par_nombre,
+        par_depart: req.body.par_depart,
+        par_ced_juridica: req.body.par_ced_juridica,
+        par_email:req.body.par_email},
       function (err, docs) {
       if (err){
           console.log(err)
       }
       else{
           console.log("Original Doc : ",docs);
+          ;
       }
     });
 });

@@ -7,6 +7,7 @@ var CasoScheme = new mongoose.Schema({
     cso_numero_caso: String,
     cso_fecha_apertura: String,
     cso_fecha_traspaso: String,
+    cso_tramite_cod: [{type: mongoose.Schema.Types.ObjectId,ref: 'tramites'}],
     cso_fecha_final: String,
     //cso_tramite_cod: String,
   });
@@ -15,11 +16,11 @@ var CasoScheme = new mongoose.Schema({
 
 router.post('/agregar', (req, res)=> {
   const caso = new Caso({
-      cso_numero_caso:req.body.numeroCaso,
-      cso_fecha_apertura:req.body.fechaApertura,
-      cso_fecha_traspaso: req.body.fechaTraspaso,
-      cso_fecha_final:req.body.fechaFinal,
-      cso_tramite_cod:req.body.codTramite                 //Tramite al que pertenece
+      cso_numero_caso:req.body.cso_numero_caso,
+      cso_fecha_apertura:req.body.cso_fecha_apertura,
+      cso_fecha_traspaso: req.body.cso_fecha_traspaso,
+      cso_fecha_final:req.body.cso_fecha_final,
+      cso_tramite_cod:req.body.cso_tramite_cod                 //Tramite al que pertenece
   })
   caso.save()
   .then(res =>{
@@ -39,8 +40,12 @@ router.delete('/borrar', (req, res) => {
 });
 
 router.put('/editar', (req, res) => {
-     Caso.findOneAndUpdate({cso_numero_caso: req.body.numeroCaso }, 
-      {cso_fecha_apertura:req.body.fechaApertura, cso_fecha_traspaso: req.body.fechaTraspaso, cso_fecha_final:req.body.fechaFinal},
+     Caso.findOneAndUpdate({_id: req.body._id }, 
+      {      cso_numero_caso:req.body.cso_numero_caso,
+        cso_fecha_apertura:req.body.cso_fecha_apertura,
+        cso_fecha_traspaso: req.body.cso_fecha_traspaso,
+        cso_fecha_final:req.body.cso_fecha_final,
+        cso_tramite_cod:req.body.cso_tramite_cod },
       function (err, docs) {
       if (err){
           console.log(err)
