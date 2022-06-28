@@ -53,7 +53,11 @@ router.put('/editar', (req, res) => {
       }
       else{
           console.log("Original Doc : ",docs);
+<<<<<<< Updated upstream
           ;
+=======
+          console.log("Nuevo : ",req.body);
+>>>>>>> Stashed changes
       }
     });
 });

@@ -34,8 +34,14 @@ router.post('/agregar', (req, res)=> {
   }).catch(err => console.log(err))
 });
 
+<<<<<<< Updated upstream
 router.delete('/borrar', (req, res) => { // cambiar por id*
   Departamento.findOneAndDelete({_id: req.body._id }, function (err, docs) {// cambiar por id*
+=======
+router.delete('/borrar', (req, res) => { 
+ console.log(req.header); 
+  Departamento.findOneAndDelete({dep_codigo: req.header.data}, function (err, docs) {
+>>>>>>> Stashed changes
     if (err){
         console.log(err)
     }
