@@ -35,7 +35,8 @@ router.post('/agregar', (req, res)=> {
 });
 
 router.delete('/borrar', (req, res) => { // cambiar por id*
-  Departamento.findOneAndDelete({_id: req.body._id }, function (err, docs) {// cambiar por id*
+  console.log(req.body.id);
+  Departamento.findOneAndDelete({_id: req.body.id}, function (err, docs) {// cambiar por id*
     if (err){
         console.log(err)
     }
