@@ -7,7 +7,7 @@ var TramiteScheme = new mongoose.Schema({
     trm_nombre: String,
     trm_codigo: String,
     trm_departamentosAprueban:Array,              //departamentos que lo aprueban
-    trm_departamento_cod:[{type: mongoose.Schema.Types.ObjectId,ref: 'departamentos'}],               //departamento que lo realiza
+    trm_departamento_cod:{type: mongoose.Schema.Types.ObjectId,ref: 'departamentos'},               //departamento que lo realiza
     trm_documentos: Array                      //documentos que necesita
     
   });
@@ -29,12 +29,13 @@ router.post('/agregar', (req, res)=> {
 });
 
 router.delete('/borrar', (req, res) => {// cambiar por id*
-    Tramite.findOneAndDelete({trm_codigo: req.body.codigo }, function (err, docs) {
+  console.log(req.body.id)
+    Tramite.findOneAndDelete({_id: req.body.id }, function (err, docs) {
     if (err){
         console.log(err)
     }
     else{
-        console.log("Deleted User : ", docs);
+        console.log("Deleted tramite : ", docs);
     }
   });
 });
@@ -53,8 +54,9 @@ router.put('/editar', (req, res) => {// cambiar por id*
     });
 });
 
-router.get('/per', (req, res) => {// cambiar por id*
-    Tramite.findOne({trm_codigo: req.body.codigo}, function (err, docs) {
+router.get('/find', (req, res) => {
+  console.log("id :",req);
+    Tramite.findOne({trm_codigo:req.body.id}, function (err, docs) {
       if (err){
           console.log(err)
       }

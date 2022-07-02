@@ -29,12 +29,12 @@ router.post('/agregar', (req, res)=> {
 });
 
 router.delete('/borrar', (req, res) => {
-  Caso.findOneAndDelete({cso_numero_caso: req.body.numeroCaso }, function (err, docs) {
+  Caso.findOneAndDelete({_id: req.body.id}, function (err, docs) {
     if (err){
         console.log(err)
     }
     else{
-        console.log("Deleted User : ", docs);
+        console.log("Deleted caso : ", docs);
     }
   });
 });
