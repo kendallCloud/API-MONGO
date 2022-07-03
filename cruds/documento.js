@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const multer =require('multer');
+const { s3Uploadv2 } = require('../src/s3service');
 
 var DocumentoScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
@@ -11,10 +12,36 @@ var DocumentoScheme = new mongoose.Schema({
 
   const Documento = mongoose.model('documentos',DocumentoScheme)
 
-const upload=multer({dest: 'uploads/'});  
+/*const upload=multer({dest: 'uploads/'});  
 router.post('/upload',upload.single('file'),(req,res)=>{
   res.json({status: 'succes'});
+});*/
+
+///////////////////////////////////////////////////////////////////////////////
+const storage=multer.memoryStorage();
+
+const fileFilter=(req,file,cb)=>{
+  if(file.mimetype==='pdf'){
+    cb(null,true);
+  }else{
+    cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"),false);
+  }
+  };
+
+const upload=multer({
+  storage,
+  fileFilter,
+  limits:{fileSize:1000000000,files:2},
 });
+router.post('/upload',upload.array('file'),async (req,res)=>{
+  const file=req.files[0];
+  const result=await s3Uploadv2(file)
+  res.json({status: 'succes'});
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
 
 router.post('/agregar', (req, res)=> {
   const documento = new Documento({
