@@ -4,9 +4,11 @@ require("dotenv").config();
 
 exports.s3Uploadv2=async(file)=>{
     const s3=new S3()
-    const param={
+    console.log(process.env.AWS_ACCESS_KEY_ID);
+    const param={        
         Bucket:process.env.AWS_BUCKET_NAME,
-        Key: `uploads/{uuid()}-${file.originalname}`,
+        Key: `uploads/${uuid()}-${file.originalname}`,
+        ContentType: file.mimetype,
         Body:file.buffer,
     };
     return await s3.upload(param).promise();

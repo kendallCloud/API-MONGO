@@ -21,7 +21,7 @@ router.post('/upload',upload.single('file'),(req,res)=>{
 const storage=multer.memoryStorage();
 
 const fileFilter=(req,file,cb)=>{
-  if(file.mimetype==='pdf'){
+  if(file.mimetype==='application/pdf'){
     cb(null,true);
   }else{
     cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"),false);
@@ -35,7 +35,9 @@ const upload=multer({
 });
 router.post('/upload',upload.array('file'),async (req,res)=>{
   const file=req.files[0];
+  console.log(file);
   const result=await s3Uploadv2(file)
+  console.log(result.Location);
   res.json({status: 'succes'});
 });
 
