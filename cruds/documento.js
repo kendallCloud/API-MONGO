@@ -6,8 +6,9 @@ const { s3Uploadv2 } = require('../src/s3service');
 
 var DocumentoScheme = new mongoose.Schema({
     // _id: mongoose.Types.ObjectId,
-    dto_codigo: String,
-    dto_tramite_cod: String,
+    dto_tipoDocumento: String,
+    dto_caso_codigo:  [{type: mongoose.Schema.Types.ObjectId,ref: 'casos'}],
+    dto_doc_link: String,
   });
 
   const Documento = mongoose.model('documentos',DocumentoScheme)
@@ -30,7 +31,7 @@ const fileFilter=(req,file,cb)=>{
 
 const upload=multer({
   storage,
-  fileFilter,
+ // fileFilter,
   limits:{fileSize:1000000000,files:2},
 });
 router.post('/upload',upload.array('file'),async (req,res)=>{
@@ -38,6 +39,17 @@ router.post('/upload',upload.array('file'),async (req,res)=>{
   console.log(file);
   const result=await s3Uploadv2(file)
   console.log(result.Location);
+  
+  const documento = new Documento({
+    dto_tipoDocumento:req.body.tipoDoc,
+    dto_caso_codigo:req.body.casoCod,
+    dto_doc_link: result.Location
+  })
+  documento.save()
+  .then(res =>{
+      console.log(res);
+  }).catch(err => console.log(err))
+
   res.json({status: 'succes'});
 });
 
